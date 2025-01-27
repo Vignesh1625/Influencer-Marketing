@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Business Client Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin-top: 2rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            padding: 1.5rem;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .invalid-feedback {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Business Client Information</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if messages %}
+                        <div class="alert-container">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                         <!-- Business/business_client_info.html -->
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            
+                            <!-- Replace manual fields with Django form rendering -->
+                            <div class="mb-3">
+                                {{ form.full_name.label_tag }}
+                                {{ form.full_name }}
+                                {{ form.full_name.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.gender.label_tag }}
+                                {{ form.gender }}
+                                {{ form.gender.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.phone.label_tag }}
+                                {{ form.phone }}
+                                {{ form.phone.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.location.label_tag }}
+                                {{ form.location }}
+                                {{ form.location.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.address.label_tag }}
+                                {{ form.address }}
+                                {{ form.address.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.company_name.label_tag }}
+                                {{ form.company_name }}
+                                {{ form.company_name.errors }}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
