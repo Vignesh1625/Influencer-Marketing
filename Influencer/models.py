@@ -17,7 +17,7 @@ class InfluencerInfo(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='influencer_info'
+        related_name='influencer_info'  
     )
 
     full_name = models.CharField(max_length=255)
@@ -47,10 +47,10 @@ class InfluencerSocialMedia(models.Model):
     # Primary key field
     id = models.AutoField(primary_key=True)
     
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='social_media'
+        related_name='social_media_accounts'
     )
 
     instagram_handle = models.CharField(max_length=255, blank=True, null=True)
@@ -61,7 +61,7 @@ class InfluencerSocialMedia(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user.influencerinfo.full_name}'s Social Media"
+        return f"{self.user.influencer_info.full_name}'s Social Media"  # Updated to use correct related_name
 
     class Meta:
         verbose_name = "Social Media Account"

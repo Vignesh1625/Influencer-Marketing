@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-czhslx-zj(h=3#8opqhbkscohf@dfivu9xb722+g)12f9nr397
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # Add your production domain here
 
 
 # Application definition
@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'IMDatabase',
         'USER': 'postgres',
-        'PASSWORD': '********',
+        'PASSWORD': '********',  # Replace with your actual password
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -124,7 +124,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -132,20 +137,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Authentication User Model
+# Authentication User Model
 AUTH_USER_MODEL = 'authController.User'
 
 
-# settings.py
+# Session and security settings
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True 
 SESSION_COOKIE_SECURE = True
-# Session settings (1 week)
-SESSION_COOKIE_AGE = 604800  
+SESSION_COOKIE_AGE = 604800  # 1 week
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-# Security settings (adjust for production)
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -163,10 +166,5 @@ EMAIL_HOST = 'smtp.your-email-provider.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'eligetivignesh@email.com'
-EMAIL_HOST_PASSWORD = 'ahjz yiex munj vdjl'
+EMAIL_HOST_PASSWORD = 'your_email_password'  # Replace with your actual email password
 DEFAULT_FROM_EMAIL = 'eligetivignesh@email.com'
-
-
-# settings.py
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'

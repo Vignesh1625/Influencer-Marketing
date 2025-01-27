@@ -17,7 +17,6 @@ class InfluencerSocialMediaAdmin(admin.ModelAdmin):
 
     def get_full_name(self, obj):
         try:
-            # Since InfluencerInfo uses user_id as primary key, we can directly get it
             influencer = InfluencerInfo.objects.get(user_id=obj.user_id)
             return influencer.full_name
         except InfluencerInfo.DoesNotExist:

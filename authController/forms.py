@@ -1,10 +1,8 @@
 # authController/forms.py
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import get_user_model
+from .models import User
 from django.core.exceptions import ValidationError
-
-User = get_user_model()
 
 class LoginForm(AuthenticationForm):
     """
@@ -12,6 +10,7 @@ class LoginForm(AuthenticationForm):
     """
     username = forms.EmailField(
         widget=forms.EmailInput(attrs={
+            'autofocus': True,
             'class': 'form-control',
             'placeholder': 'Enter your email'
         })
@@ -22,6 +21,10 @@ class LoginForm(AuthenticationForm):
             'placeholder': 'Enter your password'
         })
     )
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,6 +40,7 @@ class RegistrationForm(UserCreationForm):
         initial='INFLUENCER'
     )
     email = forms.EmailField(
+        required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'example@domain.com'
@@ -62,7 +66,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2', 'role')
+        fields = ['email', 'password1', 'password2', 'role']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

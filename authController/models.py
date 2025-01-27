@@ -1,6 +1,6 @@
 # authController/models.py
 import uuid
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -23,7 +23,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
-class User(AbstractUser):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -35,14 +35,13 @@ class User(AbstractUser):
         ('INFLUENCER', 'Influencer'),
     )
 
-    username = None
     email = models.EmailField(_('email address'), unique=True)
     role = models.CharField(
         max_length=10,
         choices=ROLE_CHOICES,
         verbose_name='User Role'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -53,7 +52,7 @@ class User(AbstractUser):
         return self.email
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['email']
 
 class UserSession(models.Model):
     """Stores authenticated sessions with CSRF tokens"""

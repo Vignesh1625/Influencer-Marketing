@@ -3,7 +3,6 @@ from django import forms
 from .models import InfluencerInfo, InfluencerSocialMedia
 
 class InfluencerAdditionalForm(forms.Form):
-    # Form fields with enhanced validation
     full_name = forms.CharField(
         max_length=255,
         required=True,
@@ -75,9 +74,6 @@ class InfluencerAdditionalForm(forms.Form):
     )
 
     def clean(self):
-        """
-        Custom validation to ensure social media fields are properly filled
-        """
         cleaned_data = super().clean()
         instagram_handle = cleaned_data.get('instagram_handle')
         instagram_followers = cleaned_data.get('instagram_followers')

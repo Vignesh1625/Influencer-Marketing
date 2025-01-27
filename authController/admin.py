@@ -4,25 +4,25 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User, PasswordResetOTP, UserSession
 
 class CustomUserAdmin(UserAdmin):
-    """
-    Custom admin interface for the User model.
-    """
-    list_display = ('email', 'role', 'created_at', 'is_staff')
-    list_filter = ('role', 'is_staff', 'created_at')
+    model = User
+    list_display = ('email', 'role')
+    list_filter = ('role',)
     search_fields = ('email',)
-    ordering = ('-created_at',)
+    ordering = ('email',)
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Permissions', {'fields': ('role', 'is_active', 'is_staff', 'is_superuser')}),
-        ('Dates', {'fields': ('last_login', 'created_at')}),
+        ('Personal info', {'fields': ('role',)}),
+        ('Permissions', {'fields': ('is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login',)}),
     )
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'role', 'password1', 'password2'),
-        }),
+            'fields': ('email', 'password1', 'password2', 'role')}
+        ),
     )
-    readonly_fields = ('created_at',)
 
 class PasswordResetOTPAdmin(admin.ModelAdmin):
     """

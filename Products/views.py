@@ -41,7 +41,7 @@ def add_product(request, business_id):
 def get_influencer_products(request, influencer_id):
     try:
         return Product.objects.filter(
-            requests__influencer_id=influencer_id,  # Changed from productinfluencer to requests
+            requests__influencer_id=influencer_id,
             requests__status='accepted'
         )
     except Exception as e:
@@ -56,7 +56,7 @@ def get_influencer_requests(request, influencer_id):
         )
     except Exception as e:
         messages.error(request, f"Error getting influencer requests: {str(e)}")
-        return NewMatches.objects.none()  # Changed from ProductInfluencer to NewMatches
+        return NewMatches.objects.none()
     
 
 def get_business_products(request, business_id):
@@ -69,8 +69,6 @@ def get_business_products(request, business_id):
     
 
 
-
-# Add these new views to Products/views.py
 @login_required
 def find_similar_influencers(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -79,39 +77,6 @@ def find_similar_influencers(request, product_id):
         return HttpResponseForbidden("Permission denied")
     
     all_influencers = InfluencerInfo.objects.all()
-    
-    # # Prepare text for similarity analysis
-    # product_text = product.description
-    # influencer_bios = [inf.bio for inf in all_influencers]
-    
-    # if not influencer_bios:
-    #     messages.info(request, "No influencers available for matching")
-    #     return redirect('business_dashboard')
-    
-    # # Calculate TF-IDF similarity
-    # vectorizer = TfidfVectorizer(stop_words='english')
-    # tfidf_matrix = vectorizer.fit_transform([product_text] + influencer_bios)
-    # cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:])
-    
-    # # Get filtered influencers
-    # similar_indices = [i for i, score in enumerate(cosine_sim[0]) if score > 0.1]
-    # similar_influencers = [all_influencers[i] for i in similar_indices]
-    
-    # # Apply filters
-    # location = request.GET.get('location')
-    # gender = request.GET.get('gender')
-    # min_price = request.GET.get('min_price')
-    # max_price = request.GET.get('max_price')
-    
-    # filtered_influencers = similar_influencers
-    # if location:
-    #     filtered_influencers = [inf for inf in filtered_influencers if inf.location.lower() == location.lower()]
-    # if gender:
-    #     filtered_influencers = [inf for inf in filtered_influencers if inf.gender == gender]
-    # if min_price:
-    #     filtered_influencers = [inf for inf in filtered_influencers if inf.base_amount >= float(min_price)]
-    # if max_price:
-    #     filtered_influencers = [inf for inf in filtered_influencers if inf.base_amount <= float(max_price)]
     
     context = {
         'product': product,

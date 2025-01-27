@@ -63,7 +63,7 @@
                     </ul>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <form method="post" action="{% url 'send_request' product.id influencer.id %}">
+                    <form method="post" action="{% url 'products:send_request' product.id influencer.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success w-100">
                             Send Collaboration Request

@@ -2,7 +2,6 @@
 from django import forms
 from .models import Product
 
-
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -13,4 +12,4 @@ class ProductForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
 
-    
+
